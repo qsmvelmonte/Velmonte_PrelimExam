@@ -3,6 +3,12 @@
   become: true
   gather_facts: yes
 
+  vars:
+
+      username: prelimexam
+
+tasks:
+
   - name: install python3 and pip3
     package:
       name:
