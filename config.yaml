@@ -7,7 +7,7 @@
 
       username: prelimexam
 
-tasks:
+  tasks:
 
   - name: install python3 and pip3
     package:
