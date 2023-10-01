@@ -23,21 +23,21 @@
 
   - name: install java openJDK Ubuntu
     apt:
-      name: java-17-openjdk
+      name: openjdk-17-jdk
       state: latest
       update_cache: yes
     when: ansible_distribution == "Ubuntu"
 
   - name: install java openJDK CentOS
     yum:
-    name: java-11-openjdk
+    name: java-11-openjdk-devel
       state: present
       update_cache: yes
     when: ansible_distribution == "CentOS"
 
 
   - name: create motd file
-    yum:
+    template:
       src: /home/sher/Velmonte_PrelimExam/motd.j2
       dest: /etc/motd
 
