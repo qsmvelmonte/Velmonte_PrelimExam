@@ -5,49 +5,47 @@
 
   vars:
 
-      username: prelimexam
+      new_user: prelimexam
 
   tasks:
 
-  - name: install python3 and pip3
-    package:
-      name:
-        - python3
-        - python3-pip
-      state: latest
-      update_cache: yes
+    - name: install python3 and pip3
+      package:
+        name:
+          - python3
+          - python3-pip
+        state: latest
+        update_cache: yes
 
-  - name: set pip3 as default pip
-    command: "ln -sf /usr/bin/pip3 /usr/bin/pip"
-    when: (ansible_facts['distribution'] == "Ubuntu") or
-        (ansible_facts['distribution'] == "CentOS")
+    - name: set pip3 as default pip
+      command: "ln -sf /usr/bin/pip3 /usr/bin/pip"
+      when: (ansible_facts['distribution'] == "Ubuntu") or (ansible_facts['distribution'] == "CentOS")
 
-  - name: set python3 as default python
-    command: "ln -sf /usr/bin/python3 /usr/bin/python"
-    when: (ansible_facts['distribution'] == "Ubuntu") or
-        (ansible_facts['distribution'] == "CentOS")
+    - name: set python3 as default python
+      command: "ln -sf /usr/bin/python3 /usr/bin/python"
+      when: (ansible_facts['distribution'] == "Ubuntu") or (ansible_facts['distribution'] == "CentOS")
 
-  - name: install java openJDK Ubuntu
-    apt:
-      name: openjdk-17-jdk
-      state: latest
-      update_cache: yes
-    when: ansible_distribution == "Ubuntu"
+    - name: install java open-jdk Ubuntu
+      apt:
+        name: openjdk-17-jdk
+        state: latest
+        update_cache: yes
+      when: ansible_distribution == "Ubuntu"
 
-  - name: install java openJDK CentOS
-    yum:
-      name: java-11-openjdk-devel
-      state: present
-      update_cache: yes
-    when: ansible_distribution == "CentOS"
+    - name: install java open-jdk CentOS
+      yum:
+        name: java-11-openjdk-devel
+        state: present
+        update_cache: yes
+      when: ansible_distribution == "CentOS"
 
+    - name: create motd file
+      template:
+        src: /home/sher/Velmonte_PrelimExam/motd.j2
+        dest: /etc/motd
 
-  - name: create motd file
-    template:
-      src: /home/sher/Velmonte_PrelimExam/motd.j2
-      dest: /etc/motd
-
-  - name: creating new user
-    user:
-      name: "{{ new_user }}"
-
+    - name: creating new user
+      user:
+        name: "{{ new_user }}"
+        state: present
+        createhome: yes
